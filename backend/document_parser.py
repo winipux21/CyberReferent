@@ -50,3 +50,4 @@ def split_references_to_list(bibliography_text):
     references = re.split(r'\n\d+\.\s', bibliography_text)
     references = [clean_multiline_refs(ref) for ref in references if len(ref.strip()) > 5]
     return references
+
