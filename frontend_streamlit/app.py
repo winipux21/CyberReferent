@@ -88,3 +88,15 @@ elif mode == "📝 Текст списка литературы":
                 except Exception as e:
                     st.error(f"Ошибка декодирования: {e}")
 
+# Добавляем внизу справа иконку Telegram, ведущую к вашему боту @cyber_referent_bot.
+# Можно использовать ссылку tg://resolve?domain=cyber_referent_bot, 
+# но для надёжности часто берут https://t.me/cyber_referent_bot
+telegram_icon_html = """
+<div style="position: fixed; bottom: 20px; right: 20px;">
+    <a href="https://t.me/cyber_referent_bot" target="_blank" title="Открыть @cyber_referent_bot">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="50">
+    </a>
+</div>
+"""
+
+st.markdown(telegram_icon_html, unsafe_allow_html=True)
