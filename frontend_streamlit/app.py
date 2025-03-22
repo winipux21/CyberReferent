@@ -19,7 +19,7 @@ if mode == "📄 Файл PDF/DOCX":
             files = {"file": (uploaded_file.name, uploaded_file.getvalue())}
             # Передаем выбранный формат в параметре style
             data = {"style": style}
-            response = requests.post("http://localhost:8000/check-file/", files=files, data=data, stream=True)
+            response = requests.post("https://maincyberreferent.onrender.com/check-file/", files=files, data=data, stream=True)
             
             valid_container = st.empty()
             invalid_container = st.empty()
