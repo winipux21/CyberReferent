@@ -5,7 +5,7 @@ from sentence_transformers import SentenceTransformer
 class ReferenceRecommender:
     def __init__(self, vak_df):
         self.vak_df = vak_df
-        self.model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
+        self.model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
         self.embeddings = self.model.encode(vak_df['journal'].tolist())
         self.index = faiss.IndexFlatL2(self.embeddings.shape[1])
         self.index.add(self.embeddings)
