@@ -1,6 +1,6 @@
 import logging
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-from bot_logic import (
+from .bot_logic import (
     start,
     help_command,
     stop,

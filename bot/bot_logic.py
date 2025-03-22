@@ -58,11 +58,25 @@ def extract_gost_citation(text: str) -> str:
         return citation
     return text.strip()
 
+def extract_formatted_citation(formatted_text: str, style: str) -> str:
+    """
+    Универсальная функция для извлечения готовой цитаты по заданному стилю (APA или MLA).
+    Ищет в тексте маркер вида "APA:" или "MLA:", возвращает часть после него.
+    Отсекает блок "Примечание:", если он присутствует.
+    """
+    marker = f"{style}:"
+    if marker in formatted_text:
+        citation = formatted_text.split(marker, 1)[-1].strip()
+        if "Примечание:" in citation:
+            citation = citation.split("Примечание:")[0].strip()
+        return citation
+    return formatted_text.strip()
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     current_time = datetime.now().strftime("%d.%m.%Y %H:%M")
     welcome_message = (
-        f"Cyber-Referent, [{current_time}]\n"
-        "Привет! Это бот Cyber-Referent.\n\n"
+        f"👩🏻‍💻Cyber-Referent, [{current_time}]\n"
+        "Привет! Это бот 👩🏻‍💻Cyber-Referent.\n\n"
         "Я проверяю библиографические ссылки по стандартам ГОСТ, APA и MLA.\n\n"
         "Пожалуйста, выберите один из форматов ниже:"
     )
@@ -87,7 +101,7 @@ async def set_style(update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.warning("Не удалось удалить сообщение: %s", e)
     current_time = datetime.now().strftime("%d.%m.%Y %H:%M")
     message = (
-        f"Cyber-Referent, [{current_time}]\n"
+        f"👩🏻‍💻Cyber-Referent, [{current_time}]\n"
         f"Вы выбрали формат: {chosen}.\n\n"
         "Теперь вы можете отправлять свои ссылки или файл для проверки."
     )
@@ -96,7 +110,7 @@ async def set_style(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     current_time = datetime.now().strftime("%d.%m.%Y %H:%M")
     help_message = (
-        f"Cyber-Referent, [{current_time}]\n"
+        f"👩🏻‍💻Cyber-Referent, [{current_time}]\n"
         "Для проверки библиографии отправьте файл PDF/DOCX или текст библиографического списка.\n\n"
         "Сначала выберите формат оформления (ГОСТ, APA, MLA) с помощью соответствующих кнопок.\n\n"
         "Команды:\n"
@@ -114,7 +128,7 @@ async def stop(update: Update, context: ContextTypes.DEFAULT_TYPE):
             task.cancel()
         tasks_by_chat[chat_id].clear()
     current_time = datetime.now().strftime("%d.%m.%Y %H:%M")
-    stop_message = f"Cyber-Referent, [{current_time}]\nОперация остановлена. Жду новых данных."
+    stop_message = f"👩🏻‍💻Cyber-Referent, [{current_time}]\nОперация остановлена. Жду новых данных."
     await update.message.reply_text(stop_message, reply_markup=get_main_keyboard())
 
 async def process_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -139,6 +153,8 @@ async def process_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
             valid_refs, invalid_refs = await asyncio.to_thread(validate_references, references, vak_df)
             current_time = datetime.now().strftime("%d.%m.%Y %H:%M")
             style_chosen = user_style.get(chat_id, "ГОСТ")
+
+            # Обработка валидных ссылок
             for ref_tuple in valid_refs:
                 if not current_processing.get(chat_id, False):
                     logger.info("Обработка отменена пользователем.")
@@ -151,16 +167,19 @@ async def process_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     citation = extract_gost_citation(formatted_ref)
                 elif style_chosen == "APA":
                     formatted_ref = await asyncio.to_thread(format_apa, ref)
-                    citation = formatted_ref.strip()
+                    citation = extract_formatted_citation(formatted_ref, "APA")
                 elif style_chosen == "MLA":
                     formatted_ref = await asyncio.to_thread(format_mla, ref)
-                    citation = formatted_ref.strip()
+                    citation = extract_formatted_citation(formatted_ref, "MLA")
+
                 message_text = (
-                    f"Cyber-Referent, [{current_time}]\n"
+                    f"👩🏻‍💻Cyber-Referent, [{current_time}]\n"
                     f"✅ *Валидная ссылка:*\n\n"
                     f"{style_chosen}:\n```\n{citation}\n```"
                 )
                 await update.message.reply_text(message_text, parse_mode="Markdown", reply_markup=get_main_keyboard())
+
+            # Обработка невалидных ссылок
             for ref in invalid_refs:
                 if not current_processing.get(chat_id, False):
                     logger.info("Обработка отменена пользователем.")
@@ -171,15 +190,17 @@ async def process_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     citation = extract_gost_citation(analysis)
                 elif style_chosen == "APA":
                     analysis = await asyncio.to_thread(format_apa_ai, ref)
-                    citation = analysis.strip()
+                    citation = extract_formatted_citation(analysis, "APA")
                 elif style_chosen == "MLA":
                     analysis = await asyncio.to_thread(format_mla_ai, ref)
-                    citation = analysis.strip()
+                    citation = extract_formatted_citation(analysis, "MLA")
+
                 recommendations = await asyncio.to_thread(recommender.recommend_similar, ref, 1)
                 rec_journal = recommendations[0][0] if recommendations else "Нет рекомендации"
                 rec_issn = recommendations[0][1] if recommendations else ""
+
                 message_text = (
-                    f"Cyber-Referent, [{current_time}]\n"
+                    f"👩🏻‍💻Cyber-Referent, [{current_time}]\n"
                     f"⚠️ *Невалидная ссылка:*\n\n"
                     f"*Исходная:* {ref}\n\n"
                     f"*Ошибки и корректировки:*\n{analysis}\n\n"
@@ -187,6 +208,7 @@ async def process_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"{style_chosen}:\n```\n{citation}\n```"
                 )
                 await update.message.reply_text(message_text, parse_mode="Markdown", reply_markup=get_main_keyboard())
+
     except asyncio.CancelledError:
         logger.info("Обработка файла отменена.")
     except Exception as e:
@@ -201,6 +223,8 @@ async def process_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
         valid_refs, invalid_refs = await asyncio.to_thread(validate_references, references, vak_df)
         current_time = datetime.now().strftime("%d.%m.%Y %H:%M")
         style_chosen = user_style.get(chat_id, "ГОСТ")
+
+        # Обработка валидных ссылок
         for ref_tuple in valid_refs:
             if not current_processing.get(chat_id, False):
                 logger.info("Обработка отменена пользователем.")
@@ -213,16 +237,19 @@ async def process_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 citation = extract_gost_citation(formatted_ref)
             elif style_chosen == "APA":
                 formatted_ref = await asyncio.to_thread(format_apa, ref)
-                citation = formatted_ref.strip()
+                citation = extract_formatted_citation(formatted_ref, "APA")
             elif style_chosen == "MLA":
                 formatted_ref = await asyncio.to_thread(format_mla, ref)
-                citation = formatted_ref.strip()
+                citation = extract_formatted_citation(formatted_ref, "MLA")
+
             message_text = (
-                f"Cyber-Referent, [{current_time}]\n"
+                f"👩🏻‍💻Cyber-Referent, [{current_time}]\n"
                 f"✅ *Валидная ссылка:*\n\n"
                 f"{style_chosen}:\n```\n{citation}\n```"
             )
             await update.message.reply_text(message_text, parse_mode="Markdown", reply_markup=get_main_keyboard())
+
+        # Обработка невалидных ссылок
         for ref in invalid_refs:
             if not current_processing.get(chat_id, False):
                 logger.info("Обработка отменена пользователем.")
@@ -233,15 +260,17 @@ async def process_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 citation = extract_gost_citation(analysis)
             elif style_chosen == "APA":
                 analysis = await asyncio.to_thread(format_apa_ai, ref)
-                citation = analysis.strip()
+                citation = extract_formatted_citation(analysis, "APA")
             elif style_chosen == "MLA":
                 analysis = await asyncio.to_thread(format_mla_ai, ref)
-                citation = analysis.strip()
+                citation = extract_formatted_citation(analysis, "MLA")
+
             recommendations = await asyncio.to_thread(recommender.recommend_similar, ref, 1)
             rec_journal = recommendations[0][0] if recommendations else "Нет рекомендации"
             rec_issn = recommendations[0][1] if recommendations else ""
+
             message_text = (
-                f"Cyber-Referent, [{current_time}]\n"
+                f"👩🏻‍💻Cyber-Referent, [{current_time}]\n"
                 f"⚠️ *Невалидная ссылка:*\n\n"
                 f"*Исходная:* {ref}\n\n"
                 f"*Ошибки и корректировки:*\n{analysis}\n\n"
@@ -249,6 +278,7 @@ async def process_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"{style_chosen}:\n```\n{citation}\n```"
             )
             await update.message.reply_text(message_text, parse_mode="Markdown", reply_markup=get_main_keyboard())
+
     except asyncio.CancelledError:
         logger.info("Обработка текста отменена.")
     except Exception as e:

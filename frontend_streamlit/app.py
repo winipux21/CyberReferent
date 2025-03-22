@@ -58,7 +58,7 @@ elif mode == "📝 Текст списка литературы":
     if st.button("Проверить текст"):
         # Передаем выбранный формат вместе с текстом библиографии
         data = {"bibliography_text": bibliography_text, "style": style}
-        response = requests.post("http://127.0.0.1:8000/check-text/", data=data, stream=True)
+        response = requests.post("https://maincyberreferent.onrender.com/check-text/", data=data, stream=True)
         
         valid_container = st.empty()
         invalid_container = st.empty()
