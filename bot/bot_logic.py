@@ -133,6 +133,7 @@ async def stop(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def process_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
+    compiled_citations = []  # Список для сохранения исправленных ссылок
     try:
         document = update.message.document
         if document:
@@ -178,6 +179,7 @@ async def process_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"{style_chosen}:\n```\n{citation}\n```"
                 )
                 await update.message.reply_text(message_text, parse_mode="Markdown", reply_markup=get_main_keyboard())
+                compiled_citations.append(citation)
 
             # Обработка невалидных ссылок
             for ref in invalid_refs:
@@ -208,6 +210,23 @@ async def process_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"{style_chosen}:\n```\n{citation}\n```"
                 )
                 await update.message.reply_text(message_text, parse_mode="Markdown", reply_markup=get_main_keyboard())
+                compiled_citations.append(citation)
+
+            # После обработки всех ссылок отправляем сформированный список для копирования с нумерацией
+            if compiled_citations:
+                numbered_citations = "\n\n".join(f"{i+1}. {citation}" for i, citation in enumerate(compiled_citations))
+                compiled_message = (
+                    f"📝 *Полный список исправленных ссылок:*\n"
+                    f"```\n{numbered_citations}\n```"
+                )
+                await update.message.reply_text(compiled_message, parse_mode="Markdown", reply_markup=get_main_keyboard())
+
+            final_message = (
+                "🎉 *Обработка завершена!*\n"
+                "Вся литература успешно обработана. Спасибо, что воспользовались Cyber-Referent. "
+                "Надеюсь, наша помощь была полезной и вдохновляющей для дальнейших исследований!"
+            )
+            await update.message.reply_text(final_message, parse_mode="Markdown", reply_markup=get_main_keyboard())
 
     except asyncio.CancelledError:
         logger.info("Обработка файла отменена.")
@@ -217,6 +236,7 @@ async def process_file(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def process_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
+    compiled_citations = []  # Список для сохранения исправленных ссылок
     try:
         text = update.message.text.strip()
         references = await asyncio.to_thread(split_references_from_text, text)
@@ -248,6 +268,7 @@ async def process_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"{style_chosen}:\n```\n{citation}\n```"
             )
             await update.message.reply_text(message_text, parse_mode="Markdown", reply_markup=get_main_keyboard())
+            compiled_citations.append(citation)
 
         # Обработка невалидных ссылок
         for ref in invalid_refs:
@@ -278,6 +299,23 @@ async def process_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"{style_chosen}:\n```\n{citation}\n```"
             )
             await update.message.reply_text(message_text, parse_mode="Markdown", reply_markup=get_main_keyboard())
+            compiled_citations.append(citation)
+
+        # После обработки всех ссылок отправляем сформированный список для копирования с нумерацией
+        if compiled_citations:
+            numbered_citations = "\n\n".join(f"{i+1}. {citation}" for i, citation in enumerate(compiled_citations))
+            compiled_message = (
+                f"📝 *Полный список исправленных ссылок:*\n"
+                f"```\n{numbered_citations}\n```"
+            )
+            await update.message.reply_text(compiled_message, parse_mode="Markdown", reply_markup=get_main_keyboard())
+
+        final_message = (
+            "🎉 *Обработка завершена!*\n"
+            "Вся литература успешно обработана. Спасибо, что воспользовались Cyber-Referent. "
+            "Желаем вам успехов в дальнейших научных исследованиях и оформлении библиографических списков!"
+        )
+        await update.message.reply_text(final_message, parse_mode="Markdown", reply_markup=get_main_keyboard())
 
     except asyncio.CancelledError:
         logger.info("Обработка текста отменена.")

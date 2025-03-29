@@ -15,6 +15,8 @@ from backend.apa_ai_formatter import format_apa_ai
 from backend.mla_ai_formatter import format_mla_ai
 from backend.recommendation_engine import ReferenceRecommender
 from backend.text_parser import split_references_from_text
+from backend.converter import convert_reference
+
 
 app = FastAPI(
     title="🎓 Cyber-Referent API",
@@ -57,7 +59,8 @@ async def check_references_from_file(
             return JSONResponse({"error": "Список литературы не найден."}, status_code=400)
 
         references = split_references_to_list(bibliography_section)
-        valid_refs, invalid_refs = validate_references(references, vak_df)
+        style_upper = style.upper()  # определяем стиль заранее
+        valid_refs, invalid_refs = validate_references(references, vak_df, style=style_upper)
 
         # Выбор форматирования валидных ссылок по выбранному стилю
         style_upper = style.upper()
@@ -120,7 +123,7 @@ async def check_text_references(
         return JSONResponse({"error": e.errors()}, status_code=400)
     try:
         references = split_references_from_text(bib_input.bibliography_text)
-        valid_refs, invalid_refs = validate_references(references, vak_df)
+        valid_refs, invalid_refs = validate_references(references, vak_df, style=style_upper)
 
         style_upper = style.upper()
         if style_upper == "GOST":
@@ -168,6 +171,19 @@ async def check_text_references(
     except Exception as e:
         print(f"Ошибка обработки текста: {e}")
         return JSONResponse({"error": f"Ошибка обработки текста: {str(e)}"}, status_code=500)
+
+# Новый эндпоинт для конвертации библиографической записи
+@app.post("/convert-reference/")
+async def convert_reference_endpoint(
+    reference: str = Form(...),
+    source_format: str = Form(...),
+    target_format: str = Form(...)
+):
+    try:
+        converted = convert_reference(reference, source_format, target_format)
+        return JSONResponse({"converted": converted})
+    except Exception as e:
+        return JSONResponse({"error": f"Ошибка конвертации: {str(e)}"}, status_code=500)
 
 if __name__ == "__main__":
     uvicorn.run("backend.main:app", host="127.0.0.1", port=8000, reload=True)
