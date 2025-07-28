@@ -61,8 +61,9 @@
 ```
 git clone https://github.com/winipux21/CyberReferent
 cd CyberReferent
-python -m venv venv && source venv/bin/activate      # создаём и активируем виртуальное окружение
-pip install -r requirements.txt                      # backend + frontend + bot
+python -m venv env           # создаём виртуальное окружение
+env\Scripts\activate      # активируем виртуальное окружение
+pip install -r requirements.txt      # backend + frontend + bot
 ```
 * Настройка среды
 Создайте ```.env``` и включите туда эти переменные:
@@ -71,33 +72,18 @@ TELEGRAM_BOT_TOKEN=
 DEEPSEEK_API_KEY = 
 TAVILY_API_KEY = 
 ```
-* Запуск сервера
-Запустите внутренний сервер с помощью команды ```node server.js```
-
-## Настройка фронтенда
-* Клонирование репозитория и установка зависимостей
+* Запуск приложения
+1. Запуск серверной части
+REST API
 ```
-cd smp-vk-mini-app/frontend
-npm install
+uvicorn backend.main:app
 ```
-* Настройка среды
-Create ```.env``` from the template:
+2. Запуск веб-интерфейса
 ```
-VITE_API_URL=http://localhost:5000
-VITE_YANDEX_API_KEY=
+streamlit run frontend_streamlit/app.py
 ```
-* Запуска фронтенда
-Запустите внутренний сервер с помощью команды ```npm start            # сервер vite dev включен на http://localhost:5173```
-
-Дополнительно: используйте vk‑туннель для тестирования на реальном устройстве внутри VK:
+3. Запуск телеграм бота
 ```
-npm run tunnel       # создает общедоступную HTTPS-ссылку
+python -m bot.bot_main
 ```
-* Создание и развертывание
-```
-npm run build        # выводит статические файлы в /frontend/build
-npm run deploy       # vite build + vk-miniapps-deploy (требуется токен API VK)
-```
-
-
-
+Проект готов к работе — загружайте PDF или DOCX через веб‑форму либо отправляйте их боту и получите оформленный библиографический список!
