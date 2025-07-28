@@ -2,6 +2,8 @@
 
 «Cyber‑Referent» — мой дипломный проект, цель которого — сократить время и повысить точность оформления библиографических списков. Я разработал систему «под ключ»: от анализа предметной области до полноценного веб‑приложения и Telegram‑бота
 
+[english](https://github.com/winipux21/CyberReferent/blob/main/README.md) [русский](https://github.com/winipux21/CyberReferent/blob/main/README/ru.md)
+
 Моими главными задачами было:
 * Архитектура (чистая, модульная, с API‑шлюзом на FastAPI)
 * Backend‑разработка всех микросервисов (парсер PDF/DOCX, валидатор ссылок, конвертер стилей, веб‑скрапер, экспорт BibTeX/CSV)
@@ -43,3 +45,44 @@
 Если у вас есть только URL, «Cyber‑Referent» соберёт метаданные сам. Введите ссылку на статью, и модуль web‑scraper извлечёт автора, название, DOI и сформирует полноформатную запись. Таким образом, оформление литературы по интернет‑ресурсам сводится к одной операции «вставить ссылку → получить готовую ссылку»
 
 <img width="1789" height="875" alt="q6" src="https://github.com/user-attachments/assets/82e63966-afa6-4adc-82a6-ac76ef643c5d" />
+
+# Руководство по настройке и запуску
+
+Добро пожаловать! Ниже — краткая инструкция по локальному развертыванию Cyber‑Referent.
+Стек проекта: **Python 3.11** + **FastAPI**, **Streamlit**, **python‑telegram‑bot** 
+
+![Static Badge](https://img.shields.io/badge/python-3.11.9-green?link=https%3A%2F%2Fwww.python.org%2Fdownloads%2Frelease%2Fpython-3119%2F) ![Static Badge](https://img.shields.io/badge/streamlit-1.47.1-red?link=https%3A%2F%2Fstreamlit.io%2F) ![Static Badge](https://img.shields.io/badge/telegram_bot-22.3-blue?link=https%3A%2F%2Fpython-telegram-bot.org%2F) ![Static Badge](https://img.shields.io/badge/FastAPI-0.115.12-green?link=https%3A%2F%2Fpython-telegram-bot.org%2F) ![Static Badge](https://img.shields.io/badge/deepseek-reasoner-blue?link=https%3A%2F%2Fplatform.deepseek.com%2Fusage) ![Static Badge](https://img.shields.io/badge/tavily-0.7.10-orange?link=https%3A%2F%2Fwww.tavily.com%2F)
+
+---
+
+## Настройка перед запуском
+* Клонирование репозитория и установка зависимостей
+```
+git clone https://github.com/winipux21/CyberReferent
+cd CyberReferent
+python -m venv env           # создаём виртуальное окружение
+env\Scripts\activate      # активируем виртуальное окружение
+pip install -r requirements.txt      # backend + frontend + bot
+```
+* Настройка среды
+Создайте ```.env``` и включите туда эти переменные:
+```
+TELEGRAM_BOT_TOKEN=
+DEEPSEEK_API_KEY = 
+TAVILY_API_KEY = 
+```
+* Запуск приложения
+1. Запуск серверной части
+REST API
+```
+uvicorn backend.main:app
+```
+2. Запуск веб-интерфейса
+```
+streamlit run frontend_streamlit/app.py
+```
+3. Запуск телеграм бота
+```
+python -m bot.bot_main
+```
+Проект готов к работе — загружайте PDF или DOCX через веб‑форму либо отправляйте их боту и получите оформленный библиографический список!
