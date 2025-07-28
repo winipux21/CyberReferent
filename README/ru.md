@@ -73,7 +73,6 @@ TAVILY_API_KEY =
 ```
 * Запуск приложения
 1. Запуск серверной части
-REST API
 ```
 uvicorn backend.main:app
 ```
@@ -85,4 +84,5 @@ streamlit run frontend_streamlit/app.py
 ```
 python -m bot.bot_main
 ```
+
 Проект готов к работе — загружайте PDF или DOCX через веб‑форму либо отправляйте их боту и получите оформленный библиографический список!
