@@ -22,7 +22,7 @@ The user uploads an article (PDF/DOCX), URL, or simply inserts a list of referen
 5. Converts links between styles and exports them to BibTeX/CSV
 6. Displays the result in the web interface or in the Telegram chat
 
-## Deconstruction of the project
+## Project demonstration
 The start page immediately after launch, the user sees a simple form: uploading a PDF/DOCX, inserting a list or URL link, and quickly choosing a style (GOST, APA, MLA). The user can also immediately switch to the task he needs./Converter/Web scraping. The system instantly sets the context and shows which actions are available next
 
 <img width="1864" height="876" alt="q1" src="https://github.com/user-attachments/assets/c5733558-18b4-42d4-b2b9-55e95a463e87" />
