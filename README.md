@@ -11,6 +11,8 @@ In my area of responsibility were:
 * Frontend on Streamlit and Telegram bot with python‑telegram‑bot
 * CI testing (150 pytest cases, 100% completion)
 
+![Static Badge](https://img.shields.io/badge/python-3.11.9-green?link=https%3A%2F%2Fwww.python.org%2Fdownloads%2Frelease%2Fpython-3119%2F) ![Static Badge](https://img.shields.io/badge/streamlit-1.47.1-red?link=https%3A%2F%2Fstreamlit.io%2F) ![Static Badge](https://img.shields.io/badge/telegram_bot-22.3-blue?link=https%3A%2F%2Fpython-telegram-bot.org%2F) ![Static Badge](https://img.shields.io/badge/FastAPI-0.115.12-green?link=https%3A%2F%2Fpython-telegram-bot.org%2F) ![Static Badge](https://img.shields.io/badge/deepseek-reasoner-blue?link=https%3A%2F%2Fplatform.deepseek.com%2Fusage) ![Static Badge](https://img.shields.io/badge/tavily-0.7.10-orange?link=https%3A%2F%2Fwww.tavily.com%2F)
+
 ## Project concept
 The user uploads an article (PDF/DOCX), URL, or simply inserts a list of references. The system:
 1. Extracts the text and finds the "Literature" section
@@ -44,6 +46,44 @@ After checking, just click "Export → BibTeX" to get ready.bib file. The system
 If you only have the URL, Cyber‑Referent will collect the metadata itself. Enter the link to the article, and the web‑scraper module extracts the author, title, DOI and generates a full-length entry. Thus, the design of literature on Internet resources is reduced to a single operation "insert link → get ready link"
 
 <img width="1789" height="875" alt="q6" src="https://github.com/user-attachments/assets/82e63966-afa6-4adc-82a6-ac76ef643c5d" />
+
+# Setup and Launch Guide
+
+Welcome! Below is a brief instruction on the local deployment of Cyber—Referent.
+Project stack: **Python 3.11** + **FastAPI**, **Streamlit**, **python‑telegram‑bot**
+
+## Pre-launch setup
+* Cloning the repository and installing dependencies
+```
+git clone https://github.com/winipux21/CyberReferent
+cd CyberReferent
+python -m venv env           # создаём виртуальное окружение
+env\Scripts\activate      # активируем виртуальное окружение
+pip install -r requirements.txt      # backend + frontend + bot
+```
+
+* Configure environment
+Create ```.env``` from the template:
+```
+TELEGRAM_BOT_TOKEN=
+DEEPSEEK_API_KEY = 
+TAVILY_API_KEY = 
+```
+* Launching the app
+1. Launching the server side
+```
+uvicorn backend.main:app
+```
+2. Launching the web interface
+```
+streamlit run frontend_streamlit/app.py
+```
+3. Launching a telegram bot
+```
+python -m bot.bot_main
+```
+
+The project is ready to work — download a PDF or DOCX via the web form or send them to the bot and get a completed bibliographic list!
 
 
 
