@@ -2,6 +2,8 @@
 
 "Cyber‑Referent" is my graduation project, the purpose of which is to reduce time and improve the accuracy of bibliographic lists. I have developed a turnkey system: from domain analysis to a full‑fledged web application and a Telegram bot
 
+[english](https://github.com/winipux21/CyberReferent/blob/main/README.md) [русский](https://github.com/winipux21/CyberReferent/blob/main/README/ru.md)
+
 In my area of responsibility were:
 * Frchitecture (clean, modular, with API gateway on FastAPI)
 * Backend‑development of all microservices (PDF/DOCX parser, link validator, style converter, web scraper, BibTeX/CSV export)
