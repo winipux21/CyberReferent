@@ -4,6 +4,8 @@
 
 [english](https://github.com/winipux21/CyberReferent/blob/main/README.md) [русский](https://github.com/winipux21/CyberReferent/blob/main/README/ru.md)
 
+![Static Badge](https://img.shields.io/badge/python-3.11.9-green?link=https%3A%2F%2Fwww.python.org%2Fdownloads%2Frelease%2Fpython-3119%2F) ![Static Badge](https://img.shields.io/badge/streamlit-1.47.1-red?link=https%3A%2F%2Fstreamlit.io%2F) ![Static Badge](https://img.shields.io/badge/telegram_bot-22.3-blue?link=https%3A%2F%2Fpython-telegram-bot.org%2F) ![Static Badge](https://img.shields.io/badge/FastAPI-0.115.12-green?link=https%3A%2F%2Fpython-telegram-bot.org%2F) ![Static Badge](https://img.shields.io/badge/deepseek-reasoner-blue?link=https%3A%2F%2Fplatform.deepseek.com%2Fusage) ![Static Badge](https://img.shields.io/badge/tavily-0.7.10-orange?link=https%3A%2F%2Fwww.tavily.com%2F)
+
 Моими главными задачами было:
 * Архитектура (чистая, модульная, с API‑шлюзом на FastAPI)
 * Backend‑разработка всех микросервисов (парсер PDF/DOCX, валидатор ссылок, конвертер стилей, веб‑скрапер, экспорт BibTeX/CSV)
@@ -50,8 +52,6 @@
 
 Добро пожаловать! Ниже — краткая инструкция по локальному развертыванию Cyber‑Referent.
 Стек проекта: **Python 3.11** + **FastAPI**, **Streamlit**, **python‑telegram‑bot** 
-
-![Static Badge](https://img.shields.io/badge/python-3.11.9-green?link=https%3A%2F%2Fwww.python.org%2Fdownloads%2Frelease%2Fpython-3119%2F) ![Static Badge](https://img.shields.io/badge/streamlit-1.47.1-red?link=https%3A%2F%2Fstreamlit.io%2F) ![Static Badge](https://img.shields.io/badge/telegram_bot-22.3-blue?link=https%3A%2F%2Fpython-telegram-bot.org%2F) ![Static Badge](https://img.shields.io/badge/FastAPI-0.115.12-green?link=https%3A%2F%2Fpython-telegram-bot.org%2F) ![Static Badge](https://img.shields.io/badge/deepseek-reasoner-blue?link=https%3A%2F%2Fplatform.deepseek.com%2Fusage) ![Static Badge](https://img.shields.io/badge/tavily-0.7.10-orange?link=https%3A%2F%2Fwww.tavily.com%2F)
 
 ---
 
