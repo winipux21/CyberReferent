@@ -1,7 +1,7 @@
 import re
 from typing import Tuple, List, Dict
 import logging
-
+import os
 # Настройка логирования
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)

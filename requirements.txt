@@ -14,3 +14,4 @@ pyparsing
 playwright
 openpyxl
 dotenv
+tavily-python

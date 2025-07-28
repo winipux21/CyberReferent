@@ -1,7 +1,7 @@
 # backend/apa_ai_converter.py
 import openai
 from dotenv import load_dotenv
-
+import os
 # Загрузка переменных окружения
 load_dotenv()
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")

@@ -4,7 +4,7 @@ import openai
 import logging
 import re
 from dotenv import load_dotenv
-
+import os
 # Загрузка переменных окружения
 load_dotenv()
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")

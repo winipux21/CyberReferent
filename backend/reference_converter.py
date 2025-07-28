@@ -1,5 +1,5 @@
 # backend/reference_converter.py
-
+import os
 import openai
 import logging
 from dotenv import load_dotenv
