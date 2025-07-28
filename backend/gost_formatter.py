@@ -1,3 +1,5 @@
+# backend/gost_formatter.py
+
 import re  # обязательно!
 
 def format_gost(author, title, journal, year, issn):

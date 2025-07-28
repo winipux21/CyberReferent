@@ -1,12 +1,4 @@
-"""
-mla_formatter.py
-
-Модуль для форматирования библиографической ссылки по стандарту MLA.
-Пример оформления MLA для статьи:
-  Author. "Title of Article." Title of Periodical, vol. number, no. number, Year, pages.
-
-Если каких-либо данных не хватает, функция возвращает сообщение с указанием недостатка информации.
-"""
+# backend/mla_formatter.py
 
 def format_mla(reference: str) -> str:
     """
@@ -45,11 +37,3 @@ def format_mla(reference: str) -> str:
     # Добавляем пометку о формате
     return f"MLA: {formatted}"
 
-
-# Пример тестирования:
-if __name__ == "__main__":
-    test_reference = "Smith, J., Advances in AI, Journal of Modern Science, 2020, vol. 10, no. 2, pp. 123-130"
-    print("Исходная запись:")
-    print(test_reference)
-    print("\nОтформатированная запись:")
-    print(format_mla(test_reference))

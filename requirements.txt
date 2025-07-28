@@ -9,3 +9,8 @@ requests
 openai
 streamlit
 python-multipart
+bs4
+pyparsing
+playwright
+openpyxl
+dotenv

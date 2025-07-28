@@ -1,14 +1,14 @@
-"""
-apa_ai_converter.py
-
-Модуль для преобразования библиографической ссылки в корректное оформление по стандарту APA в виде одной строки.
-Структура результата (для книг): 
-Автор, И. О. (ред.). (Год). Название работы. Город: Издательство. (Количество страниц pp.). ISBN XXXXXXXXXXXXX.
-"""
-
+# backend/apa_ai_converter.py
 import openai
+from dotenv import load_dotenv
 
-DEEPSEEK_API_KEY = "sk-15abeb7685c742478a7be0f4827c7cef"
+# Загрузка переменных окружения
+load_dotenv()
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+
+if not DEEPSEEK_API_KEY:
+    raise ValueError("DEEPSEEK_API_KEY не найден в переменных окружения.")
+
 MODEL = "deepseek-chat"
 
 def convert_to_apa(reference: str) -> str:
@@ -31,9 +31,3 @@ def convert_to_apa(reference: str) -> str:
         return response.choices[0].message.content.strip()
     except Exception as e:
         return f"Ошибка при вызове нейросетевого сервиса: {e}"
-
-if __name__ == "__main__":
-    test_reference = "3. Экономика и управление: Учебник / Под ред. А. А. Смирнова. — М.: Просвещение, 2018. — 400 с. ISBN 9781231234213"
-    result = convert_to_apa(test_reference)
-    print("Результат конвертации в APA:")
-    print(result)

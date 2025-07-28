@@ -1,6 +1,6 @@
 import logging
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-from .bot_logic import (
+from bot.bot_logic import (
     start,
     help_command,
     stop,
@@ -37,3 +37,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#python -m bot.bot_main

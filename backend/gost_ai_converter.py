@@ -1,14 +1,15 @@
-"""
-gost_ai_converter.py
-
-Модуль для преобразования библиографической ссылки в корректное оформление по стандарту ГОСТ Р 7.0.100-2018 в виде одной строки.
-Структура результата:
-Автор И.О. Название статьи // Название журнала. – Год. – Т. X. – № Y. – С. Z–Z. – ISSN/ISBN XXXX-XXXX.
-"""
+# backend/gost_ai_converter.py
 
 import openai
+from dotenv import load_dotenv
 
-DEEPSEEK_API_KEY = "sk-15abeb7685c742478a7be0f4827c7cef"
+# Загрузка переменных окружения
+load_dotenv()
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+
+if not DEEPSEEK_API_KEY:
+    raise ValueError("DEEPSEEK_API_KEY не найден в переменных окружения.")
+
 MODEL = "deepseek-chat"
 
 def convert_to_gost(reference: str) -> str:
@@ -32,8 +33,3 @@ def convert_to_gost(reference: str) -> str:
     except Exception as e:
         return f"Ошибка при вызове нейросетевого сервиса: {e}"
 
-if __name__ == "__main__":
-    test_reference = "Петров 2020, стр. 15"
-    result = convert_to_gost(test_reference)
-    print("Результат конвертации в ГОСТ:")
-    print(result)

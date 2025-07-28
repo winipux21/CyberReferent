@@ -1,15 +1,3 @@
-"""
-apa_formatter.py
-
-Модуль для форматирования библиографической ссылки по стандарту APA.
-Функция format_apa принимает строку библиографической записи, проводит базовый анализ и возвращает корректное оформление.
-
-Пример APA для статьи:
-  Author, A. A., & Author, B. B. (Year). Title of article. Title of Periodical, volume(issue), pages. https://doi.org/xx.xxx/yyyy
-
-Если каких-то данных не хватает, функция возвращает сообщение с указанием недостатка информации.
-"""
-
 def format_apa(reference: str) -> str:
     """
     Форматирует библиографическую ссылку в стиль APA.
@@ -43,12 +31,3 @@ def format_apa(reference: str) -> str:
     
     # Добавляем пометку, что запись оформлена по стандарту APA
     return f"APA: {formatted}"
-
-
-# Пример тестирования:
-if __name__ == "__main__":
-    test_reference = "Smith, J., 2020, Advances in AI, Journal of Modern Science, 10, 2, 123-130"
-    print("Исходная запись:")
-    print(test_reference)
-    print("\nОтформатированная запись:")
-    print(format_apa(test_reference))
