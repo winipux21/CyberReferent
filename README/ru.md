@@ -45,3 +45,59 @@
 Если у вас есть только URL, «Cyber‑Referent» соберёт метаданные сам. Введите ссылку на статью, и модуль web‑scraper извлечёт автора, название, DOI и сформирует полноформатную запись. Таким образом, оформление литературы по интернет‑ресурсам сводится к одной операции «вставить ссылку → получить готовую ссылку»
 
 <img width="1789" height="875" alt="q6" src="https://github.com/user-attachments/assets/82e63966-afa6-4adc-82a6-ac76ef643c5d" />
+
+# Руководство по настройке и запуску
+
+Добро пожаловать! Ниже — краткая инструкция по локальному развертыванию Cyber‑Referent.
+Стек проекта: **Python 3.11** + **FastAPI**, **Streamlit**, **python‑telegram‑bot** 
+
+![Static Badge](https://img.shields.io/badge/Node.js-20.18.3-green?link=https%3A%2F%2Fnodejs.org%2Fen%2Fdownload) ![Static Badge](https://img.shields.io/badge/Vite.js-5.4.10-purple)
+ ![Static Badge](https://img.shields.io/badge/React.js-17-blue) ![Static Badge](https://img.shields.io/badge/vk_router-1.4.2-blue?link=https%3A%2F%2Fdev.vk.com) ![Static Badge](https://img.shields.io/badge/ws-8.18.0-1A1A1A?link=https%3A%2F%2Fdev.vk.com)
+
+---
+
+## Настройка перед запуском
+* Клонирование репозитория и установка зависимостей
+```
+git clone https://github.com/winipux21/CyberReferent
+cd CyberReferent
+python -m venv venv && source venv/bin/activate      # создаём и активируем виртуальное окружение
+pip install -r requirements.txt                      # backend + frontend + bot
+```
+* Настройка среды
+Создайте ```.env``` и включите туда эти переменные:
+```
+TELEGRAM_BOT_TOKEN=
+DEEPSEEK_API_KEY = 
+TAVILY_API_KEY = 
+```
+* Запуск сервера
+Запустите внутренний сервер с помощью команды ```node server.js```
+
+## Настройка фронтенда
+* Клонирование репозитория и установка зависимостей
+```
+cd smp-vk-mini-app/frontend
+npm install
+```
+* Настройка среды
+Create ```.env``` from the template:
+```
+VITE_API_URL=http://localhost:5000
+VITE_YANDEX_API_KEY=
+```
+* Запуска фронтенда
+Запустите внутренний сервер с помощью команды ```npm start            # сервер vite dev включен на http://localhost:5173```
+
+Дополнительно: используйте vk‑туннель для тестирования на реальном устройстве внутри VK:
+```
+npm run tunnel       # создает общедоступную HTTPS-ссылку
+```
+* Создание и развертывание
+```
+npm run build        # выводит статические файлы в /frontend/build
+npm run deploy       # vite build + vk-miniapps-deploy (требуется токен API VK)
+```
+
+
+
