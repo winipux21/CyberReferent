@@ -2,7 +2,7 @@
 
 «Cyber‑Referent» — мой дипломный проект, цель которого — сократить время и повысить точность оформления библиографических списков. Я разработал систему «под ключ»: от анализа предметной области до полноценного веб‑приложения и Telegram‑бота
 
-[english](https://github.com/idonix21/CyberReferent/blob/main/README.md) [русский](https://github.com/idonix21/CyberReferent/blob/main/README/ru.md)
+[english](https://github.com/winipux21/CyberReferent/blob/main/README.md) [русский](https://github.com/winipux21/CyberReferent/blob/main/README/ru.md)
 
 Моими главными задачами было:
 * Архитектура (чистая, модульная, с API‑шлюзом на FastAPI)
@@ -58,7 +58,7 @@
 ## Настройка перед запуском
 * Клонирование репозитория и установка зависимостей
 ```
-git clone https://github.com/idonix21/CyberReferent
+git clone https://github.com/winipux21/CyberReferent
 cd CyberReferent
 python -m venv env           # создаём виртуальное окружение
 env\Scripts\activate      # активируем виртуальное окружение
