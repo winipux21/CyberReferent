@@ -2,7 +2,7 @@
 
 "Cyber‑Referent" is my graduation project, the purpose of which is to reduce time and improve the accuracy of bibliographic lists. I have developed a turnkey system: from domain analysis to a full‑fledged web application and a Telegram bot
 
-[english](https://github.com/idonix21/CyberReferent/blob/main/README.md) [русский](https://github.com/idonix21/CyberReferent/blob/main/README/ru.md)
+[english](https://github.com/winipux21/CyberReferent/blob/main/README.md) [русский](https://github.com/winipux21/CyberReferent/blob/main/README/ru.md)
 
 In my area of responsibility were:
 * Frchitecture (clean, modular, with API gateway on FastAPI)
@@ -55,7 +55,7 @@ Project stack: **Python 3.11** + **FastAPI**, **Streamlit**, **python‑tel
 ## Pre-launch setup
 * Cloning the repository and installing dependencies
 ```
-git clone https://github.com/idonix21/CyberReferent
+git clone https://github.com/winipux21/CyberReferent
 cd CyberReferent
 python -m venv env           # создаём виртуальное окружение
 env\Scripts\activate      # активируем виртуальное окружение
